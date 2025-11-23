@@ -55,6 +55,22 @@ jobs:
     - name: Login to Docker Hub
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
+    - name: Debug build args
+      run: |
+        printf -- "--build-arg %s=%s " \
+          DATABASE_USER "${{ secrets.DATABASE_USER }}" \
+          DATABASE_PW "${{ secrets.DATABASE_PW }}" \
+          DATABASE_NAME "${{ secrets.DATABASE_NAME }}" \
+          DATABASE_URL "${{ secrets.DATABASE_URL }}" \
+          JWT_SECRET_KEY "${{ secrets.JWT_SECRET_KEY }}" \
+          JWT_ALGORITHM "${{ secrets.JWT_ALGORITHM }}" \
+          JWT_EXPIRATION_MINUTES "${{ secrets.JWT_EXPIRATION_MINUTES }}" \
+          BACKEND_PORT "${{ secrets.BACKEND_PORT }}" \
+          FRONTEND_PORT "${{ secrets.FRONTEND_PORT }}" \
+          LOG_FORMAT "${{ secrets.LOG_FORMAT }}" \
+          VITE_API_BASE_URL "${{ secrets.VITE_API_BASE_URL }}" \
+          BASE_LOGGER_NAME "${{ secrets.BASE_LOGGER_NAME }}"
+
     ####################################################
     # FRONTEND BUILD
     ####################################################
