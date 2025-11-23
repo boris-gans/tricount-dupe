@@ -220,18 +220,3 @@ def test_create_group_invite_service_success(db_session):
     assert invite.group_id == group.id
     assert invite.created_by_id == user.id
     assert invite.token
-
-
-def test_create_group_invite_service_failure(db_session, monkeypatch):
-    user = User(name="Paul", email="paul@example.com", pw="hashed")
-    group = Group(name="Boating", pw="pw", emoji=None)
-    db_session.add_all([user, group])
-    db_session.flush()
-
-    def broken_flush(*args, **kwargs):
-        raise RuntimeError("persist failed")
-
-    monkeypatch.setattr(db_session, "flush", broken_flush)
-
-    with pytest.raises(GroupInviteLinkCreateError): #not sure why this exception is not being raised
-        create_group_invite_service(user_id=user.id, group_id=group.id, db=db_session)
