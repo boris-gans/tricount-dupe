@@ -1,6 +1,10 @@
-FROM node:23 AS build
+FROM mycountregistry.azurecr.io/node:23 AS build
 
 WORKDIR /app
+
+# Allow API base URL to be injected at build time
+ARG VITE_API_BASE_URL
+ENV VITE_API_BASE_URL=${VITE_API_BASE_URL}
 
 # Copy package files first
 COPY package*.json ./

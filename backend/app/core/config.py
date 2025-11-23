@@ -11,6 +11,7 @@ class Settings(BaseSettings):
 
     log_format: str
     base_logger_name: str
+    frontend_origins: list[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
     @property
     def database_url(self):

@@ -26,9 +26,9 @@ def get_full_group_details(group_id: int, db: Session) -> GroupOut:
             .options(
                 joinedload(Group.members),
                 joinedload(Group.expenses)
-                # .joinedload(Expense.paid_by)
-                    .joinedload(Expense.splits)
-                    .joinedload(ExpenseSplit.user)    
+                .joinedload(Expense.splits)
+                .joinedload(ExpenseSplit.user),
+                # paid_by intentionally lazy-loaded to keep response size small
             )
             .filter(Group.id == group_id)
             .first()
@@ -38,9 +38,11 @@ def get_full_group_details(group_id: int, db: Session) -> GroupOut:
 
         if not group_details:
             logger.warning("group lookup failed", extra={"group_id": group_id})
-            raise GroupNotFoundError from e
+            raise GroupNotFoundError
 
         return group_details
+    except GroupNotFoundError:
+        raise
     except Exception as e:
         logger.error(f"Error loading group details: {e}")
         raise GroupFullDetailsError from e
@@ -56,9 +58,11 @@ def check_join_group(group_name: str, group_pw: str, db: Session) -> int:
 
         if not group:
             logger.warning("group lookup failed", extra={"group_name": group_name})
-            raise GroupCheckPwJoinError from e
+            raise GroupCheckPwJoinError
         return group.id
 
+    except GroupCheckPwJoinError:
+        raise
     except Exception as e:
         logger.error(f"Error checking join group: {e}")
         raise GroupNotFoundError from e
@@ -101,6 +105,10 @@ def add_user_group(group_id: int, user: User, db: Session) -> GroupOut:
             .filter(Group.id == group_id)
             .first()
         )
+        if not group:
+            logger.warning("group not found when adding user", extra={"group_id": group_id, "user_id": user.id})
+            raise GroupNotFoundError
+
         new_member = GroupMembers(user=user, group=group)
         group.member_associations.append(new_member)
 
@@ -173,4 +181,3 @@ def create_group_invite_service(user_id: int, group_id: int, db: Session, expire
         db.rollback()
         logger.error(f"Error in group invite service: {e}")
         raise GroupInviteLinkCreateError from e
-

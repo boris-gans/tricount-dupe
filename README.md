@@ -29,7 +29,10 @@ docker compose up -d
 ```
 - Backend API: http://localhost:8000
 - Frontend app: http://localhost:3000
+- Prometheus UI: http://localhost:9090 (scrapes `/metrics` from the backend)
+- Grafana UI: http://localhost:3001 (default `admin/admin`, preloads a Backend Overview dashboard)
 - Database data persists in the `postgres_data` volume.
+- Monitoring data persists in the `prom_data` (Prometheus) and `grafana_data` volumes.
 
 To stop the stack:
 ```bash
@@ -60,6 +63,7 @@ docker compose down
    npm install
    npm run dev
    ```
+   - Copy `frontend/.env.example` to `frontend/.env` and set `VITE_API_BASE_URL` to your backend URL (e.g., the Azure Web App endpoint).
 
 > Tip: If you prefer a locally installed PostgreSQL server, make sure it mirrors the connection settings from `backend/.env` or update the variables accordingly.
 
@@ -80,6 +84,11 @@ docker compose down
   ```
 
 When running tests locally, keep the database container running so integration tests can reach PostgreSQL.
+
+## Health & Metrics
+- Health: `GET /health` returns overall status and verifies database connectivity.
+- Metrics: `GET /metrics` exposes Prometheus-format metrics including request counts, latency histograms, and error totals for scraping by the Prometheus service.
+- A Grafana dashboard titled **Backend Overview** is auto-provisioned when running with Docker Compose.
 
 
 ## App Usage

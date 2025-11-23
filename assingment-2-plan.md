@@ -25,7 +25,7 @@
 
 1. Review code, look for oppurtunities to implement design patterns and enforce SOLID principles
 2. Implement health checks + monitoring
-    -   grafana or prometheus??
+    -   grafana and prometheus
     -   access control for monitoring?
 3. Add some more tests and configure html coverage report
 4. Look into GH actions, how to configure CI/CD stuff on it? How can it init an Azure deployment?

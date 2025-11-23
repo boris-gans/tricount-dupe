@@ -1,5 +1,5 @@
 # Use slim python image
-FROM python:3.11-slim
+FROM mycountregistry.azurecr.io/python:3.11-slim AS base
 
 # Set workdir
 WORKDIR /app

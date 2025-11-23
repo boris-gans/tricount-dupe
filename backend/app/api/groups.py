@@ -131,7 +131,7 @@ def view_all_groups(
         return get_short_group_details(user_id=current_user.id, db=db)
     except GroupShortDetailsError:
         raise HTTPException(
-            status_code=status.HTTP_404_INTERNAL_ERROR,
+            status_code=status.HTTP_500_INTERNAL_SERVER_ERROR,
             detail="Error finding user's groups"
         )
     except Exception as e:
