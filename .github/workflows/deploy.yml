@@ -76,17 +76,19 @@ jobs:
       run: |
         docker build \
           -f backend/Dockerfile \
-          --build-arg DATABASE_USER="${{ secrets.DATABASE_USER }}" \
-          --build-arg DATABASE_PW="${{ secrets.DATABASE_PW }}" \
-          --build-arg DATABASE_NAME="${{ secrets.DATABASE_NAME }}" \
-          --build-arg DATABASE_URL="${{ secrets.DATABASE_URL }}" \
-          --build-arg JWT_SECRET_KEY="${{ secrets.JWT_SECRET_KEY }}" \
-          --build-arg JWT_ALGORITHM="${{ secrets.JWT_ALGORITHM }}" \
-          --build-arg JWT_EXPIRATION_MINUTES="${{ secrets.JWT_EXPIRATION_MINUTES }}" \
-          --build-arg BACKEND_PORT="${{ secrets.BACKEND_PORT }}" \
-          --build-arg FRONTEND_PORT="${{ secrets.FRONTEND_PORT }}" \
-          --build-arg LOG_FORMAT="${{ secrets.LOG_FORMAT }}" \
-          --build-arg BASE_LOGGER_NAME="${{ secrets.BASE_LOGGER_NAME }}"
+          $(printf -- "--build-arg %s=%s " \
+            DATABASE_USER "${{ secrets.DATABASE_USER }}" \
+            DATABASE_PW "${{ secrets.DATABASE_PW }}" \
+            DATABASE_NAME "${{ secrets.DATABASE_NAME }}" \
+            DATABASE_URL "${{ secrets.DATABASE_URL }}" \
+            JWT_SECRET_KEY "${{ secrets.JWT_SECRET_KEY }}" \
+            JWT_ALGORITHM "${{ secrets.JWT_ALGORITHM }}" \
+            JWT_EXPIRATION_MINUTES "${{ secrets.JWT_EXPIRATION_MINUTES }}" \
+            BACKEND_PORT "${{ secrets.BACKEND_PORT }}" \
+            FRONTEND_PORT "${{ secrets.FRONTEND_PORT }}" \
+            LOG_FORMAT "${{ secrets.LOG_FORMAT }}" \
+            BASE_LOGGER_NAME "${{ secrets.BASE_LOGGER_NAME }}"
+          ) \
           -t $DOCKERHUB_REPO/$BACKEND_IMAGE:latest \
           backend
 
