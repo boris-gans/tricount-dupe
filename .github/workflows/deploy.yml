@@ -1,0 +1,122 @@
+name: Build & Deploy to Docker Hub
+
+on:
+  push:
+    branches: [ "main" ]
+
+env:
+  DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_USERNAME }}
+  FRONTEND_IMAGE: mycount-frontend
+  BACKEND_IMAGE: mycount-backend
+  GRAFANA_IMAGE: mycount-grafana
+  PROM_IMAGE: mycount-prometheus
+
+jobs:
+  test-backend:
+    name: Run Backend Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.11"
+
+    - name: Install Backend Dependencies
+      working-directory: backend
+      run: pip install -r requirements.txt
+
+    - name: Run Tests with Coverage
+      working-directory: backend
+      run: make coverage   # must generate coverage.xml
+
+    - name: Check Coverage > 80%
+      working-directory: backend
+      run: |
+        coverage=$(coverage report | grep TOTAL | awk '{print $4}' | sed 's/%//')
+        echo "Coverage: $coverage%"
+        if (( $(echo "$coverage < 80" | bc -l) )); then
+          echo "Coverage below threshold"
+          exit 1
+        fi
+
+  build-and-push:
+    name: Build & Push Containers to Docker Hub
+    needs: test-backend
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Login to Docker Hub
+      run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+
+    ####################################################
+    # FRONTEND BUILD
+    ####################################################
+    - name: Build Frontend
+      run: |
+        docker build \
+          -f frontend/Dockerfile \
+          --build-arg VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }} \
+          -t $DOCKERHUB_REPO/$FRONTEND_IMAGE:latest \
+          frontend
+
+    - name: Push Frontend
+      run: docker push $DOCKERHUB_REPO/$FRONTEND_IMAGE:latest
+
+    ####################################################
+    # BACKEND BUILD
+    ####################################################
+    - name: Build Backend
+      run: |
+        docker build \
+          -f backend/Dockerfile \
+          $(printf -- "--build-arg %s=%s " \
+            DATABASE_USER "${{ secrets.DATABASE_USER }}" \
+            DATABASE_PW "${{ secrets.DATABASE_PW }}" \
+            DATABASE_NAME "${{ secrets.DATABASE_NAME }}" \
+            DATABASE_URL "${{ secrets.DATABASE_URL }}" \
+            JWT_SECRET_KEY "${{ secrets.JWT_SECRET_KEY }}" \
+            JWT_ALGORITHM "${{ secrets.JWT_ALGORITHM }}" \
+            JWT_EXPIRATION_MINUTES "${{ secrets.JWT_EXPIRATION_MINUTES }}" \
+            BACKEND_PORT "${{ secrets.BACKEND_PORT }}" \
+            FRONTEND_PORT "${{ secrets.FRONTEND_PORT }}" \
+            LOG_FORMAT "${{ secrets.LOG_FORMAT }}" \
+            BASE_LOGGER_NAME "${{ secrets.BASE_LOGGER_NAME }}" \
+          ) \
+          -t $DOCKERHUB_REPO/$BACKEND_IMAGE:latest \
+          backend
+
+    - name: Push Backend
+      run: docker push $DOCKERHUB_REPO/$BACKEND_IMAGE:latest
+
+    ####################################################
+    # GRAFANA BUILD
+    ####################################################
+    - name: Build Grafana
+      run: |
+        docker build \
+          -f monitoring/grafana/Dockerfile \
+          -t $DOCKERHUB_REPO/$GRAFANA_IMAGE:latest \
+          monitoring/grafana
+
+    - name: Push Grafana
+      run: docker push $DOCKERHUB_REPO/$GRAFANA_IMAGE:latest
+
+    ####################################################
+    # PROMETHEUS BUILD
+    ####################################################
+    - name: Build Prometheus
+      run: |
+        docker build \
+          -f monitoring/prometheus/Dockerfile \
+          -t $DOCKERHUB_REPO/$PROM_IMAGE:latest \
+          monitoring/prometheus
+
+    - name: Push Prometheus
+      run: docker push $DOCKERHUB_REPO/$PROM_IMAGE:latest

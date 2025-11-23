@@ -156,15 +156,5 @@ az containerapp update \
   --name mycount-backend \
   --resource-group BCSAI2025-DEVOPS-STUDENTS-A \
   --set-env-vars "
-        DATABASE_USER=mycountadmin
-        DATABASE_PW=secure-pw
-        DATABASE_NAME=mycount-database
-        DATABASE_URL=mycount-database.postgres.database.azure.com
-        JWT_SECRET_KEY=supersecretkey
-        JWT_ALGORITHM=HS256
-        JWT_EXPIRATION_MINUTES=20
-        BACKEND_PORT=8000
-        FRONTEND_PORT=3000
-        LOG_FORMAT=%(asctime)s | %(levelname)s | %(name)s | %(message)s
-        BASE_LOGGER_NAME=mycount
+
     "

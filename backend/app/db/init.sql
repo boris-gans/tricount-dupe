@@ -2,8 +2,6 @@
 -- PostgreSQL database dump
 --
 
-\restrict 7EmFaPy6ZBLytZl3jke9gl6uPLhNH5yu850HUgZnPtdce5nY7djbPb2graWIk9w
-
 -- Dumped from database version 15.14 (Debian 15.14-1.pgdg13+1)
 -- Dumped by pg_dump version 15.14 (Debian 15.14-1.pgdg13+1)
 
@@ -23,7 +21,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- Name: expense; Type: TABLE; Schema: public; Owner: postgres
+-- Name: expense; Type: TABLE; Schema: public; Owner: mycountadmin
 --
 
 CREATE TABLE public.expense (
@@ -36,10 +34,10 @@ CREATE TABLE public.expense (
 );
 
 
-ALTER TABLE public.expense OWNER TO postgres;
+ALTER TABLE public.expense OWNER TO mycountadmin;
 
 --
--- Name: expense_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: expense_id_seq; Type: SEQUENCE; Schema: public; Owner: mycountadmin
 --
 
 CREATE SEQUENCE public.expense_id_seq
@@ -51,17 +49,17 @@ CREATE SEQUENCE public.expense_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.expense_id_seq OWNER TO postgres;
+ALTER TABLE public.expense_id_seq OWNER TO mycountadmin;
 
 --
--- Name: expense_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: expense_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mycountadmin
 --
 
 ALTER SEQUENCE public.expense_id_seq OWNED BY public.expense.id;
 
 
 --
--- Name: expense_split; Type: TABLE; Schema: public; Owner: postgres
+-- Name: expense_split; Type: TABLE; Schema: public; Owner: mycountadmin
 --
 
 CREATE TABLE public.expense_split (
@@ -72,10 +70,10 @@ CREATE TABLE public.expense_split (
 );
 
 
-ALTER TABLE public.expense_split OWNER TO postgres;
+ALTER TABLE public.expense_split OWNER TO mycountadmin;
 
 --
--- Name: expense_split_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: expense_split_id_seq; Type: SEQUENCE; Schema: public; Owner: mycountadmin
 --
 
 CREATE SEQUENCE public.expense_split_id_seq
@@ -87,17 +85,17 @@ CREATE SEQUENCE public.expense_split_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.expense_split_id_seq OWNER TO postgres;
+ALTER TABLE public.expense_split_id_seq OWNER TO mycountadmin;
 
 --
--- Name: expense_split_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: expense_split_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mycountadmin
 --
 
 ALTER SEQUENCE public.expense_split_id_seq OWNED BY public.expense_split.id;
 
 
 --
--- Name: group; Type: TABLE; Schema: public; Owner: postgres
+-- Name: group; Type: TABLE; Schema: public; Owner: mycountadmin
 --
 
 CREATE TABLE public."group" (
@@ -108,10 +106,10 @@ CREATE TABLE public."group" (
 );
 
 
-ALTER TABLE public."group" OWNER TO postgres;
+ALTER TABLE public."group" OWNER TO mycountadmin;
 
 --
--- Name: group_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: group_id_seq; Type: SEQUENCE; Schema: public; Owner: mycountadmin
 --
 
 CREATE SEQUENCE public.group_id_seq
@@ -123,17 +121,17 @@ CREATE SEQUENCE public.group_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.group_id_seq OWNER TO postgres;
+ALTER TABLE public.group_id_seq OWNER TO mycountadmin;
 
 --
--- Name: group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: group_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mycountadmin
 --
 
 ALTER SEQUENCE public.group_id_seq OWNED BY public."group".id;
 
 
 --
--- Name: group_invite; Type: TABLE; Schema: public; Owner: postgres
+-- Name: group_invite; Type: TABLE; Schema: public; Owner: mycountadmin
 --
 
 CREATE TABLE public.group_invite (
@@ -147,10 +145,10 @@ CREATE TABLE public.group_invite (
 );
 
 
-ALTER TABLE public.group_invite OWNER TO postgres;
+ALTER TABLE public.group_invite OWNER TO mycountadmin;
 
 --
--- Name: group_invite_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: group_invite_id_seq; Type: SEQUENCE; Schema: public; Owner: mycountadmin
 --
 
 CREATE SEQUENCE public.group_invite_id_seq
@@ -162,17 +160,17 @@ CREATE SEQUENCE public.group_invite_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.group_invite_id_seq OWNER TO postgres;
+ALTER TABLE public.group_invite_id_seq OWNER TO mycountadmin;
 
 --
--- Name: group_invite_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: group_invite_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mycountadmin
 --
 
 ALTER SEQUENCE public.group_invite_id_seq OWNED BY public.group_invite.id;
 
 
 --
--- Name: group_members; Type: TABLE; Schema: public; Owner: postgres
+-- Name: group_members; Type: TABLE; Schema: public; Owner: mycountadmin
 --
 
 CREATE TABLE public.group_members (
@@ -181,10 +179,10 @@ CREATE TABLE public.group_members (
 );
 
 
-ALTER TABLE public.group_members OWNER TO postgres;
+ALTER TABLE public.group_members OWNER TO mycountadmin;
 
 --
--- Name: user; Type: TABLE; Schema: public; Owner: postgres
+-- Name: user; Type: TABLE; Schema: public; Owner: mycountadmin
 --
 
 CREATE TABLE public."user" (
@@ -195,10 +193,10 @@ CREATE TABLE public."user" (
 );
 
 
-ALTER TABLE public."user" OWNER TO postgres;
+ALTER TABLE public."user" OWNER TO mycountadmin;
 
 --
--- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: postgres
+-- Name: user_id_seq; Type: SEQUENCE; Schema: public; Owner: mycountadmin
 --
 
 CREATE SEQUENCE public.user_id_seq
@@ -210,52 +208,52 @@ CREATE SEQUENCE public.user_id_seq
     CACHE 1;
 
 
-ALTER TABLE public.user_id_seq OWNER TO postgres;
+ALTER TABLE public.user_id_seq OWNER TO mycountadmin;
 
 --
--- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: postgres
+-- Name: user_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: mycountadmin
 --
 
 ALTER SEQUENCE public.user_id_seq OWNED BY public."user".id;
 
 
 --
--- Name: expense id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: expense id; Type: DEFAULT; Schema: public; Owner: mycountadmin
 --
 
 ALTER TABLE ONLY public.expense ALTER COLUMN id SET DEFAULT nextval('public.expense_id_seq'::regclass);
 
 
 --
--- Name: expense_split id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: expense_split id; Type: DEFAULT; Schema: public; Owner: mycountadmin
 --
 
 ALTER TABLE ONLY public.expense_split ALTER COLUMN id SET DEFAULT nextval('public.expense_split_id_seq'::regclass);
 
 
 --
--- Name: group id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: group id; Type: DEFAULT; Schema: public; Owner: mycountadmin
 --
 
 ALTER TABLE ONLY public."group" ALTER COLUMN id SET DEFAULT nextval('public.group_id_seq'::regclass);
 
 
 --
--- Name: group_invite id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: group_invite id; Type: DEFAULT; Schema: public; Owner: mycountadmin
 --
 
 ALTER TABLE ONLY public.group_invite ALTER COLUMN id SET DEFAULT nextval('public.group_invite_id_seq'::regclass);
 
 
 --
--- Name: user id; Type: DEFAULT; Schema: public; Owner: postgres
+-- Name: user id; Type: DEFAULT; Schema: public; Owner: mycountadmin
 --
 
 ALTER TABLE ONLY public."user" ALTER COLUMN id SET DEFAULT nextval('public.user_id_seq'::regclass);
 
 
 --
--- Data for Name: expense; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: expense; Type: TABLE DATA; Schema: public; Owner: mycountadmin
 --
 
 COPY public.expense (id, amount, description, group_id, paid_by_id, created_by_id) FROM stdin;
@@ -273,7 +271,7 @@ COPY public.expense (id, amount, description, group_id, paid_by_id, created_by_i
 
 
 --
--- Data for Name: expense_split; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: expense_split; Type: TABLE DATA; Schema: public; Owner: mycountadmin
 --
 
 COPY public.expense_split (id, expense_id, user_id, amount) FROM stdin;
@@ -303,7 +301,7 @@ COPY public.expense_split (id, expense_id, user_id, amount) FROM stdin;
 
 
 --
--- Data for Name: group; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: group; Type: TABLE DATA; Schema: public; Owner: mycountadmin
 --
 
 COPY public."group" (id, name, pw, emoji) FROM stdin;
@@ -316,7 +314,7 @@ COPY public."group" (id, name, pw, emoji) FROM stdin;
 
 
 --
--- Data for Name: group_invite; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: group_invite; Type: TABLE DATA; Schema: public; Owner: mycountadmin
 --
 
 COPY public.group_invite (id, token, group_id, created_by_id, expires_at, used, created_at) FROM stdin;
@@ -329,7 +327,7 @@ COPY public.group_invite (id, token, group_id, created_by_id, expires_at, used, 
 
 
 --
--- Data for Name: group_members; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: group_members; Type: TABLE DATA; Schema: public; Owner: mycountadmin
 --
 
 COPY public.group_members (user_id, group_id) FROM stdin;
@@ -351,7 +349,7 @@ COPY public.group_members (user_id, group_id) FROM stdin;
 
 
 --
--- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: postgres
+-- Data for Name: user; Type: TABLE DATA; Schema: public; Owner: mycountadmin
 --
 
 COPY public."user" (id, name, pw, email) FROM stdin;
@@ -367,35 +365,35 @@ COPY public."user" (id, name, pw, email) FROM stdin;
 
 
 --
--- Name: expense_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: expense_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mycountadmin
 --
 
 SELECT pg_catalog.setval('public.expense_id_seq', 13, true);
 
 
 --
--- Name: expense_split_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: expense_split_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mycountadmin
 --
 
 SELECT pg_catalog.setval('public.expense_split_id_seq', 29, true);
 
 
 --
--- Name: group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: group_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mycountadmin
 --
 
 SELECT pg_catalog.setval('public.group_id_seq', 5, true);
 
 
 --
--- Name: group_invite_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: group_invite_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mycountadmin
 --
 
 SELECT pg_catalog.setval('public.group_invite_id_seq', 5, true);
 
 
 --
--- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: postgres
+-- Name: user_id_seq; Type: SEQUENCE SET; Schema: public; Owner: mycountadmin
 --
 
 SELECT pg_catalog.setval('public.user_id_seq', 8, true);
@@ -531,6 +529,3 @@ ALTER TABLE ONLY public.group_members
 --
 -- PostgreSQL database dump complete
 --
-
-\unrestrict 7EmFaPy6ZBLytZl3jke9gl6uPLhNH5yu850HUgZnPtdce5nY7djbPb2graWIk9w
-
