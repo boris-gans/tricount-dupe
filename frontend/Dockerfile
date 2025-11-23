@@ -1,4 +1,4 @@
-FROM mycountregistry.azurecr.io/node:23 AS build
+FROM node:23 AS build
 
 WORKDIR /app
 
