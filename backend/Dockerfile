@@ -4,6 +4,7 @@ FROM python:3.11-slim AS base
 # Set workdir
 WORKDIR /app
 
+
 # Define envs
 ARG DATABASE_USER
 ARG DATABASE_PW
