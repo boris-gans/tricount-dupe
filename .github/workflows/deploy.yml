@@ -87,7 +87,7 @@ jobs:
             BACKEND_PORT "${{ secrets.BACKEND_PORT }}" \
             FRONTEND_PORT "${{ secrets.FRONTEND_PORT }}" \
             LOG_FORMAT "${{ secrets.LOG_FORMAT }}" \
-            BASE_LOGGER_NAME "${{ secrets.BASE_LOGGER_NAME }}" \
+            BASE_LOGGER_NAME "${{ secrets.BASE_LOGGER_NAME }}"
           ) \
           -t $DOCKERHUB_REPO/$BACKEND_IMAGE:latest \
           backend
