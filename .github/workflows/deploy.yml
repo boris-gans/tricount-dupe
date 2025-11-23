@@ -86,7 +86,7 @@ jobs:
           --build-arg BACKEND_PORT="${{ secrets.BACKEND_PORT }}" \
           --build-arg FRONTEND_PORT="${{ secrets.FRONTEND_PORT }}" \
           --build-arg LOG_FORMAT="${{ secrets.LOG_FORMAT }}" \
-          --build-arg BASE_LOGGER_NAME="${{ secrets.BASE_LOGGER_NAME }}" \
+          --build-arg BASE_LOGGER_NAME="${{ secrets.BASE_LOGGER_NAME }}"
           -t $DOCKERHUB_REPO/$BACKEND_IMAGE:latest \
           backend
 
