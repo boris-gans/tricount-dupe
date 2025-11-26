@@ -69,7 +69,9 @@ jobs:
           FRONTEND_PORT "${{ secrets.FRONTEND_PORT }}" \
           LOG_FORMAT "${{ secrets.LOG_FORMAT }}" \
           VITE_API_BASE_URL "${{ secrets.VITE_API_BASE_URL }}" \
-          BASE_LOGGER_NAME "${{ secrets.BASE_LOGGER_NAME }}"
+          BASE_LOGGER_NAME "${{ secrets.BASE_LOGGER_NAME }}" \
+          DOCKERHUB_TOKEN "${{ secrets.DOCKERHUB_TOKEN }}" \
+          DOCKERHUB_USERNAME "${{ secrets.DOCKERHUB_USERNAME }}" 
 
     ####################################################
     # FRONTEND BUILD
