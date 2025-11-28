@@ -9,14 +9,20 @@ from sqlalchemy.orm import sessionmaker
 from sqlalchemy.pool import StaticPool
 
 # Ensure required environment variables for settings are present before imports
-os.environ.setdefault("database_user", "test_user")
-os.environ.setdefault("database_pw", "test_pw")
-os.environ.setdefault("database_name", "test_db")
-os.environ.setdefault("jwt_secret_key", "test_secret_key")
-os.environ.setdefault("jwt_algorithm", "HS256")
-os.environ.setdefault("jwt_expiration_minutes", "60")
-os.environ.setdefault("log_format", "%(levelname)s:%(name)s:%(message)s")
-os.environ.setdefault("base_logger_name", "test_app")
+os.environ.setdefault("database-user", "test_user")
+os.environ.setdefault("database-pw", "test_pw")
+os.environ.setdefault("database-name", "test_db")
+os.environ.setdefault("database-url-raw", "https://google.com")
+
+os.environ.setdefault("jwt-secret-key", "test_secret_key")
+os.environ.setdefault("jwt-algorithm", "HS256")
+os.environ.setdefault("jwt-expiration-minutes", "60")
+os.environ.setdefault("log-format", "%(levelname)s:%(name)s:%(message)s")
+os.environ.setdefault("base-logger-name", "test_app")
+os.environ.setdefault("frontend_origins", "127.0.0.0:8000")
+
+
+
 
 # Make sure the app package is importable
 ROOT = Path(__file__).resolve().parents[1]
