@@ -19,7 +19,7 @@ os.environ.setdefault("jwt-algorithm", "HS256")
 os.environ.setdefault("jwt-expiration-minutes", "60")
 os.environ.setdefault("log-format", "%(levelname)s:%(name)s:%(message)s")
 os.environ.setdefault("base-logger-name", "test_app")
-os.environ.setdefault("frontend_origins", "127.0.0.0:8000")
+os.environ.setdefault("frontend-origins", "127.0.0.0:8000")
 
 
 
