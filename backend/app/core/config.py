@@ -3,23 +3,23 @@ from pydantic_settings import BaseSettings
 from pydantic import Field
 
 class Settings(BaseSettings):
-    database_user: str = Field(..., env="database-user")
-    database_pw: str = Field(..., env="database-pw")
-    database_name: str = Field(..., env="database-name")
-    database_url_raw: str = Field(..., env="database-url")
+    database_user: str = Field(default="test_user", env="database-user")
+    database_pw: str = Field(default="test_pw", env="database-pw")
+    database_name: str = Field(default="test_db", env="database-name")
+    database_url_raw: str | None = Field(default=None, env="database-url")
 
-    jwt_secret_key: str = Field(..., env="jwt-secret-key")
-    jwt_algorithm: str = Field(..., env="jwt-algorithm")
-    jwt_expiration_minutes: int = Field(..., env="jwt-expiration-minutes")
+    jwt_secret_key: str = Field(default="testsecret", env="jwt-secret-key")
+    jwt_algorithm: str = Field(default="HS256", env="jwt-algorithm")
+    jwt_expiration_minutes: int = Field(default=15, env="jwt-expiration-minutes")
 
-    log_format: str = Field(..., env="log-format")
-    base_logger_name: str = Field(..., env="base-logger-name")
+    log_format: str = Field(default="%(asctime)s | %(levelname)s | %(name)s | %(message)s", env="log-format")
+    base_logger_name: str = Field(default="test", env="base-logger-name")
     frontend_origins: list[str] = Field(
         default=["http://localhost:3000"],
         env="frontend-origins"
     )
 
-
+    @property
     def database_url(self) -> str:
         if self.database_url_raw:
             normalized = self.database_url_raw
@@ -42,7 +42,6 @@ class Settings(BaseSettings):
             f"{self.database_pw}@mycount-database.postgres.database.azure.com:"
             f"5432/{self.database_name}?sslmode=require"
         )
-
 
     class Config: #tell pydantic to load variables from .env (not in prod)
         env_file = None
