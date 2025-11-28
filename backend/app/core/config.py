@@ -6,7 +6,7 @@ class Settings(BaseSettings):
     database_user: str = Field(..., env="database-user")
     database_pw: str = Field(..., env="database-pw")
     database_name: str = Field(..., env="database-name")
-    database_url: str = Field(..., env="database-url")
+    database_url_raw: str = Field(..., env="database-url")
 
     jwt_secret_key: str = Field(..., env="jwt-secret-key")
     jwt_algorithm: str = Field(..., env="jwt-algorithm")
@@ -21,8 +21,8 @@ class Settings(BaseSettings):
 
 
     def database_url(self) -> str:
-        if self.database_url:
-            normalized = self.database_url
+        if self.database_url_raw:
+            normalized = self.database_url_raw
 
             # Convert postgres:// → postgresql+psycopg2://
             if normalized.startswith("postgres://"):
