@@ -58,18 +58,6 @@ jobs:
     - name: Debug build args
       run: |
         printf -- "--build-arg %s=%s " \
-          DATABASE_USER "${{ secrets.DATABASE_USER }}" \
-          DATABASE_PW "${{ secrets.DATABASE_PW }}" \
-          DATABASE_NAME "${{ secrets.DATABASE_NAME }}" \
-          DATABASE_URL "${{ secrets.DATABASE_URL }}" \
-          JWT_SECRET_KEY "${{ secrets.JWT_SECRET_KEY }}" \
-          JWT_ALGORITHM "${{ secrets.JWT_ALGORITHM }}" \
-          JWT_EXPIRATION_MINUTES "${{ secrets.JWT_EXPIRATION_MINUTES }}" \
-          BACKEND_PORT "${{ secrets.BACKEND_PORT }}" \
-          FRONTEND_PORT "${{ secrets.FRONTEND_PORT }}" \
-          LOG_FORMAT "${{ secrets.LOG_FORMAT }}" \
-          VITE_API_BASE_URL "${{ secrets.VITE_API_BASE_URL }}" \
-          BASE_LOGGER_NAME "${{ secrets.BASE_LOGGER_NAME }}" \
           DOCKERHUB_TOKEN "${{ secrets.DOCKERHUB_TOKEN }}" \
           DOCKERHUB_USERNAME "${{ secrets.DOCKERHUB_USERNAME }}" 
 
@@ -79,10 +67,9 @@ jobs:
     - name: Build Frontend
       run: |
         docker build \
-          -f frontend/Dockerfile \
           --build-arg VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }} \
-          -t $DOCKERHUB_REPO/$FRONTEND_IMAGE:latest \
-          frontend
+          -t ${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest \
+          ./frontend
 
     - name: Push Frontend
       run: docker push $DOCKERHUB_REPO/$FRONTEND_IMAGE:latest
@@ -94,19 +81,6 @@ jobs:
       run: |
         docker build \
           -f backend/Dockerfile \
-          $(printf -- "--build-arg %s=%s " \
-            DATABASE_USER "${{ secrets.DATABASE_USER }}" \
-            DATABASE_PW "${{ secrets.DATABASE_PW }}" \
-            DATABASE_NAME "${{ secrets.DATABASE_NAME }}" \
-            DATABASE_URL "${{ secrets.DATABASE_URL }}" \
-            JWT_SECRET_KEY "${{ secrets.JWT_SECRET_KEY }}" \
-            JWT_ALGORITHM "${{ secrets.JWT_ALGORITHM }}" \
-            JWT_EXPIRATION_MINUTES "${{ secrets.JWT_EXPIRATION_MINUTES }}" \
-            BACKEND_PORT "${{ secrets.BACKEND_PORT }}" \
-            FRONTEND_PORT "${{ secrets.FRONTEND_PORT }}" \
-            LOG_FORMAT "${{ secrets.LOG_FORMAT }}" \
-            BASE_LOGGER_NAME "${{ secrets.BASE_LOGGER_NAME }}"
-          ) \
           -t $DOCKERHUB_REPO/$BACKEND_IMAGE:latest \
           backend
 
