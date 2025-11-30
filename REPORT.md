@@ -1,4 +1,4 @@
-# MyCount Delivery Report (Version 2 vs Version 1)
+# MyCount v2 Delivery Report
 
 ## Overview
 MyCount remains a full-stack expense-sharing tool built on FastAPI, PostgreSQL, React, and Docker. This report summarizes the changes introduced after release/v1, focusing on production hardening, delivery automation, and observability. The goal was to make the service deployable, monitorable, and testable with minimal manual steps.
