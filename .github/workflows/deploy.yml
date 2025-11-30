@@ -2,7 +2,7 @@ name: Build & Deploy to Docker Hub
 
 on:
   push:
-    branches: [ "master" ]
+    branches: [ "master", "develop" ]
 
 env:
   DOCKERHUB_REPO: ${{ secrets.DOCKERHUB_USERNAME }}
@@ -62,6 +62,11 @@ jobs:
     - name: Login to Docker Hub
       run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
 
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
     ####################################################
     # FRONTEND
     ####################################################
@@ -75,6 +80,13 @@ jobs:
     - name: Push Frontend
       run: docker push $DOCKERHUB_REPO/$FRONTEND_IMAGE:latest
 
+    - name: Deploy to Azure Container App
+      run: |
+        az containerapp update \
+          --name mycount-frontend \
+          --resource-group BCSAI2025-DEVOPS-STUDENTS-A \
+          --image $DOCKERHUB_REPO/$FRONTEND_IMAGE:latest
+
     ####################################################
     # BACKEND
     ####################################################
@@ -87,6 +99,13 @@ jobs:
 
     - name: Push Backend
       run: docker push $DOCKERHUB_REPO/$BACKEND_IMAGE:latest
+
+    - name: Deploy to Azure Container App
+      run: |
+        az containerapp update \
+          --name mycount-backend \
+          --resource-group BCSAI2025-DEVOPS-STUDENTS-A \
+          --image $DOCKERHUB_REPO/$BACKEND_IMAGE:latest
 
     ####################################################
     # GRAFANA
