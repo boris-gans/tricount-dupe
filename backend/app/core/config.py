@@ -7,6 +7,7 @@ class Settings(BaseSettings):
     database_pw: str = Field(default="Hard-password", env="database-pw")
     database_name: str = Field(default="mycount", env="database-name")
     database_url_raw: str | None = Field(default=None, env="database-url")
+    database_url_local: str | None = Field(default=None, env="database-url-local")
 
     jwt_secret_key: str = Field(default="testsecret", env="jwt-secret-key")
     jwt_algorithm: str = Field(default="HS256", env="jwt-algorithm")
@@ -21,7 +22,7 @@ class Settings(BaseSettings):
 
     @property
     def database_url(self) -> str:
-        if self.database_url_raw:
+        if not self.database_url_local and self.database_url_raw:
             normalized = self.database_url_raw
 
             # Convert postgres:// → postgresql+psycopg2://
@@ -41,8 +42,8 @@ class Settings(BaseSettings):
             f"postgresql+psycopg2://{self.database_user}:"
             f"{self.database_pw}@mycount-database.postgres.database.azure.com:"
             f"5432/{self.database_name}?sslmode=require"
-        )
-    # class Config: #tell pydantic to load variables from .env (not in prod)
-    #     env_file = None
+        ) if not self.database_url_local else self.database_url_local
+    class Config: #tell pydantic to load variables from .env (not in prod)
+        env_file = ".env"
 
 settings = Settings()
