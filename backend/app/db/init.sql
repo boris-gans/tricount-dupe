@@ -21,6 +21,16 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
+-- Clean existing objects so the script can be re-run idempotently
+--
+DROP TABLE IF EXISTS public.expense_split CASCADE;
+DROP TABLE IF EXISTS public.expense CASCADE;
+DROP TABLE IF EXISTS public.group_invite CASCADE;
+DROP TABLE IF EXISTS public.group_members CASCADE;
+DROP TABLE IF EXISTS public."group" CASCADE;
+DROP TABLE IF EXISTS public."user" CASCADE;
+
+--
 -- Name: expense; Type: TABLE; Schema: public; Owner: mycountadmin
 --
 

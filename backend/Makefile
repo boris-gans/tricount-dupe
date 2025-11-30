@@ -1,5 +1,5 @@
 # Tell make that these targets are commands, not files
-.PHONY: test coverage clean
+.PHONY: test coverage clean dev
 
 # Use the current Python/venv
 PYTHON := python3
@@ -24,3 +24,6 @@ coverage:
 clean:
 	rm -rf $(COV_HTML_DIR)
 	rm -rf .coverage
+
+dev:
+	.venv/bin/uvicorn app.main:app --reload

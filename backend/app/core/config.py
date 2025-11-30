@@ -2,6 +2,8 @@
 from pydantic_settings import BaseSettings
 from pydantic import Field
 
+# DATABASE_URL_RAW=postgres://mycountadmin:Hard-password@mycount-database.postgres.database.azure.com:5432/mycount
+
 class Settings(BaseSettings):
     database_user: str = Field(default="test_user", env="database-user")
     database_pw: str = Field(default="test_pw", env="database-pw")
@@ -44,6 +46,6 @@ class Settings(BaseSettings):
         )
 
     class Config: #tell pydantic to load variables from .env (not in prod)
-        env_file = None
+        env_file = ".env"
 
 settings = Settings()
