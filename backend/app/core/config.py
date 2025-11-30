@@ -2,23 +2,21 @@
 from pydantic_settings import BaseSettings
 from pydantic import Field
 
-# DATABASE_URL_RAW=postgres://mycountadmin:Hard-password@mycount-database.postgres.database.azure.com:5432/mycount
-
 class Settings(BaseSettings):
-    database_user: str = Field(default="test_user", alias="database-user")
-    database_pw: str = Field(default="test_pw", alias="database-pw")
-    database_name: str = Field(default="test_db", alias="database-name")
-    database_url_raw: str | None = Field(default=None, alias="database-url")
+    database_user: str = Field(default="test_user", env="database-user")
+    database_pw: str = Field(default="test_pw", env="database-pw")
+    database_name: str = Field(default="test_db", env="database-name")
+    database_url_raw: str | None = Field(default=None, env="database-url")
 
-    jwt_secret_key: str = Field(default="testsecret", alias="jwt-secret-key")
-    jwt_algorithm: str = Field(default="HS256", alias="jwt-algorithm")
-    jwt_expiration_minutes: int = Field(default=15, alias="jwt-expiration-minutes")
+    jwt_secret_key: str = Field(default="testsecret", env="jwt-secret-key")
+    jwt_algorithm: str = Field(default="HS256", env="jwt-algorithm")
+    jwt_expiration_minutes: int = Field(default=15, env="jwt-expiration-minutes")
 
-    log_format: str = Field(default="%(asctime)s | %(levelname)s | %(name)s | %(message)s", alias="log-format")
-    base_logger_name: str = Field(default="test", alias="base-logger-name")
+    log_format: str = Field(default="%(asctime)s | %(levelname)s | %(name)s | %(message)s", env="log-format")
+    base_logger_name: str = Field(default="test", env="base-logger-name")
     frontend_origins: list[str] = Field(
         default=["http://localhost:3000", "http://localhost:5173"],
-        alias="frontend-origins"
+        env="frontend-origins"
     )
 
     @property
