@@ -1,9 +1,4 @@
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
-// const API_BASE_URL = "https://mycount-backend.wonderfulground-326f2847.westeurope.azurecontainerapps.io";
-
-// const config = await (await fetch('/config.json')).json();
-// export const API_BASE_URL = config.apiBaseUrl || "http://127.0.0.1:8000";
-
+const API_BASE_URL = "https://mycount-backend.wonderfulground-326f2847.westeurope.azurecontainerapps.io";
 
 function getStoredToken() {
     return localStorage.getItem("token");

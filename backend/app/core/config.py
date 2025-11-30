@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     base_logger_name: str = Field(default="test", env="base-logger-name")
     frontend_origins: list[str] = Field(
         default=["http://localhost:3000"],
+        default=["http://localhost:5173"],
         env="frontend-origins"
     )
 
