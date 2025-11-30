@@ -20,7 +20,14 @@ RUN npm run build
 
 # Production server: nginx
 FROM nginx:alpine
+
 COPY --from=build /app/dist /usr/share/nginx/html
 
+# Copy runtime config injector (for api url)
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+# Use entry point script to inject configs before runtime (this also starts up nginx)
+ENTRYPOINT [ "entrypoint.sh" ]

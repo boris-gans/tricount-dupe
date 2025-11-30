@@ -1,4 +1,7 @@
-const API_BASE_URL = import.meta.env["vite-api-base-url"] || "http://127.0.0.1:8000";
+// const API_BASE_URL = import.meta.env["vite-api-base-url"] || "http://127.0.0.1:8000";
+const config = await (await fetch('/config.json')).json();
+export const API_BASE_URL = config.apiBaseUrl || "http://127.0.0.1:8000";
+
 
 function getStoredToken() {
     return localStorage.getItem("token");
