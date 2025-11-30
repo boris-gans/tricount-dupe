@@ -73,7 +73,6 @@ jobs:
     - name: Build Frontend
       run: |
         docker build \
-          --build-arg VITE_API_BASE_URL=${{ secrets.VITE_API_BASE_URL }} \
           -t $DOCKERHUB_REPO/$FRONTEND_IMAGE:latest \
           ./frontend
 
@@ -86,7 +85,6 @@ jobs:
           --name mycount-frontend \
           --resource-group BCSAI2025-DEVOPS-STUDENTS-A \
           --image $DOCKERHUB_REPO/$FRONTEND_IMAGE:latest
-          --container-name frontend
 
     ####################################################
     # BACKEND
@@ -107,7 +105,6 @@ jobs:
           --name mycount-backend \
           --resource-group BCSAI2025-DEVOPS-STUDENTS-A \
           --image $DOCKERHUB_REPO/$BACKEND_IMAGE:latest
-          --container-name backend
 
     ####################################################
     # GRAFANA
@@ -141,4 +138,3 @@ jobs:
           --name mycount-prometheus \
           --resource-group BCSAI2025-DEVOPS-STUDENTS-A \
           --image $DOCKERHUB_REPO/$PROM_IMAGE:latest
-          --container-name prometheus
