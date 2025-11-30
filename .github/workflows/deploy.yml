@@ -102,7 +102,7 @@ jobs:
     - name: Deploy to Azure Container App
       run: |
         az containerapp update \
-          --name mycount-backend \
+          --name mycount-backendv2 \
           --resource-group BCSAI2025-DEVOPS-STUDENTS-A \
           --image $DOCKERHUB_REPO/$BACKEND_IMAGE:latest
 
