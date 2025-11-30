@@ -15,8 +15,7 @@ class Settings(BaseSettings):
     log_format: str = Field(default="%(asctime)s | %(levelname)s | %(name)s | %(message)s", env="log-format")
     base_logger_name: str = Field(default="test", env="base-logger-name")
     frontend_origins: list[str] = Field(
-        default=["http://localhost:3000"],
-        default=["http://localhost:5173"],
+        default=["http://localhost:3000", "http://localhost:5173"],
         env="frontend-origins"
     )
 
