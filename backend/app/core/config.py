@@ -46,6 +46,6 @@ class Settings(BaseSettings):
         )
 
     class Config: #tell pydantic to load variables from .env (not in prod)
-        env_file = ".env"
+        env_file = None
 
 settings = Settings()
