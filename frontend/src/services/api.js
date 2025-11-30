@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://mycount-backend.wonderfulground-326f2847.westeurope.azurecontainerapps.io";
+const API_BASE_URL = "https://mycount-backendv2.wonderfulground-326f2847.westeurope.azurecontainerapps.io";
 
 function getStoredToken() {
     return localStorage.getItem("token");

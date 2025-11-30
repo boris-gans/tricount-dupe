@@ -22,7 +22,7 @@ git clone https://github.com/boris-gans/tricount_dupe.git
 cd tricount_dupe
 ```
 
-### 2. Launch with Docker (recommended)
+### 2. Launch locally with Docker (recommended)
 ```bash
 docker compose build
 docker compose up -d
@@ -87,11 +87,11 @@ When running tests locally, keep the database container running so integration t
 
 ## Deploying to Azure Container Apps
 
-### Local vs prod setup
-- **Local:** use the existing instructions above. Copy `backend/.env.example` to `backend/.env`, and (optionally) `frontend/.env.example` to `frontend/.env` for local API URLs. Run with Docker Compose or the local Python/Node steps.
-- **Prod (Azure):** secrets live in Azure Container Apps as secrets/env vars. Images are pulled from your own Docker Hub (or ACR) repository. Networking uses external ingress (backend port 8000, frontend port 80).
+Deployment secrets (those used in [deploy.yml](.github/workflows/deploy.yml)) are stored in GitHub secrets.
 
-### Deploy steps (minimal happy path)
+All runtime secrets live in Azure Container Apps as secrets/env vars. Images are pulled from your own Docker Hub (or ACR) repository. Networking uses external ingress (backend port 8000, frontend port 80).
+
+### Deploy steps
 1) **Clone & prepare env files locally**
    ```bash
    git clone https://github.com/boris-gans/tricount_dupe.git
