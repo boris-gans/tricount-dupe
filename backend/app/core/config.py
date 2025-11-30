@@ -3,9 +3,9 @@ from pydantic_settings import BaseSettings
 from pydantic import Field
 
 class Settings(BaseSettings):
-    database_user: str = Field(default="test_user", env="database-user")
-    database_pw: str = Field(default="test_pw", env="database-pw")
-    database_name: str = Field(default="test_db", env="database-name")
+    database_user: str = Field(default="mycountadmin", env="database-user")
+    database_pw: str = Field(default="Hard-password", env="database-pw")
+    database_name: str = Field(default="mycount", env="database-name")
     database_url_raw: str | None = Field(default=None, env="database-url")
 
     jwt_secret_key: str = Field(default="testsecret", env="jwt-secret-key")
@@ -38,11 +38,10 @@ class Settings(BaseSettings):
 
         # fallback
         return (
-            f"postgresql+psycopg2://{self.database_user}@mycount-database:"
+            f"postgresql+psycopg2://{self.database_user}:"
             f"{self.database_pw}@mycount-database.postgres.database.azure.com:"
             f"5432/{self.database_name}?sslmode=require"
         )
-
     # class Config: #tell pydantic to load variables from .env (not in prod)
     #     env_file = None
 
