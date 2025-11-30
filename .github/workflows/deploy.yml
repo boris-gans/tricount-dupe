@@ -86,6 +86,7 @@ jobs:
           --name mycount-frontend \
           --resource-group BCSAI2025-DEVOPS-STUDENTS-A \
           --image $DOCKERHUB_REPO/$FRONTEND_IMAGE:latest
+          --container-name frontend
 
     ####################################################
     # BACKEND
@@ -106,6 +107,7 @@ jobs:
           --name mycount-backend \
           --resource-group BCSAI2025-DEVOPS-STUDENTS-A \
           --image $DOCKERHUB_REPO/$BACKEND_IMAGE:latest
+          --container-name backend
 
     ####################################################
     # GRAFANA
@@ -132,3 +134,11 @@ jobs:
 
     - name: Push Prometheus
       run: docker push $DOCKERHUB_REPO/$PROM_IMAGE:latest
+
+    - name: Deploy to Azure Container App
+      run: |
+        az containerapp update \
+          --name mycount-prometheus \
+          --resource-group BCSAI2025-DEVOPS-STUDENTS-A \
+          --image $DOCKERHUB_REPO/$PROM_IMAGE:latest
+          --container-name prometheus
