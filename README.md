@@ -2,7 +2,7 @@
 
 This project is a full-stack web application designed to help individuals both track and split their expenses within a group. It provides a structured backend for data management and a responsive and sleek frontend for user interaction.
 
-Please view the [report](./REPORT.md) for an indepth description of the project and its features.
+Please view the [report](./REPORT.md) for an in-depth description of the project and its features.
 
 ---
 
@@ -84,6 +84,52 @@ docker compose down
   ```
 
 When running tests locally, keep the database container running so integration tests can reach PostgreSQL.
+
+## Deploying to Azure Container Apps
+
+### Local vs prod setup
+- **Local:** use the existing instructions above. Copy `backend/.env.example` to `backend/.env`, and (optionally) `frontend/.env.example` to `frontend/.env` for local API URLs. Run with Docker Compose or the local Python/Node steps.
+- **Prod (Azure):** secrets live in Azure Container Apps as secrets/env vars. Images are pulled from your own Docker Hub (or ACR) repository. Networking uses external ingress (backend port 8000, frontend port 80).
+
+### Deploy steps (minimal happy path)
+1) **Clone & prepare env files locally**
+   ```bash
+   git clone https://github.com/boris-gans/tricount_dupe.git
+   cd tricount_dupe
+   cp backend/.env.example backend/.env
+   # set DATABASE_URL_RAW (or DATABASE_USER/DB/PW/NAME), JWT_* and logging values
+   ```
+   - These values will be set as Azure secrets/env vars later; don’t commit `.env`.
+
+2) **Build and push images to your registry**
+   ```bash
+   docker login
+   docker build -t <dockerhub-username>/mycount-backend:latest backend
+   docker push <dockerhub-username>/mycount-backend:latest
+   docker build -t <dockerhub-username>/mycount-frontend:latest frontend
+   docker push <dockerhub-username>/mycount-frontend:latest
+   ```
+   - Replace `<dockerhub-username>` with your account (or use ACR and adjust the tags).
+
+3) **Create Azure resources**
+   - Resource group + Container Apps environment (any Azure region).
+   - A managed Postgres instance (or existing DB) reachable from Container Apps; require SSL.
+   - Ensure outbound access to Postgres (default for Container Apps) and open ingress for public HTTPS on the apps you want exposed.
+
+4) **Create secrets and env vars in the backend app**
+   - Add secrets: `database-user`, `database-pw`, `database-name`, `database-url`, `jwt-secret-key`, `jwt-algorithm`, `jwt-expiration-minutes`, `log-format`, `base-logger-name`, `frontend-origins`.
+   - Expose them as env vars expected by the code: `DATABASE_USER`, `DATABASE_PW`, `DATABASE_NAME`, `DATABASE_URL_RAW`, `JWT_SECRET_KEY`, `JWT_ALGORITHM`, `JWT_EXPIRATION_MINUTES`, `LOG_FORMAT`, `BASE_LOGGER_NAME`, `FRONTEND_ORIGINS`. Set `PORT=8000`.
+
+5) **Create Container Apps**
+   - **Backend:** image `<dockerhub-username>/mycount-backend:latest`, targetPort `8000`, transport `auto/http`, external ingress enabled.
+   - **Frontend:** image `<dockerhub-username>/mycount-frontend:latest`, targetPort `80`, external ingress enabled. Point its API calls to the backend URL (update `frontend/.env` before building if you want it baked in).
+
+6) **Deploy/Update**
+   - Use `az containerapp up` or `az containerapp update` to apply images, env vars, and ingress settings. Redeploy when you push new images.
+
+7) **Smoke test**
+   - Hit the backend health endpoint `/health` on the backend FQDN.
+   - Load the frontend FQDN, log in with seeded users, and verify expenses/groups load.
 
 ## Health & Metrics
 - Health: `GET /health` returns overall status and verifies database connectivity.
