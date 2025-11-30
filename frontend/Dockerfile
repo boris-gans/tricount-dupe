@@ -29,5 +29,6 @@ RUN chmod +x /entrypoint.sh
 
 EXPOSE 80
 
+CMD ["nginx", "-g", "daemon off;"]
 # Use entry point script to inject configs before runtime (this also starts up nginx)
-ENTRYPOINT [ "entrypoint.sh" ]
+# ENTRYPOINT [ "entrypoint.sh" ]
